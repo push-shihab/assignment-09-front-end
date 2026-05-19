@@ -1,6 +1,6 @@
 import Link from "next/link";
-import PrimaryButton from "./PrimaryButton";
-import SeconderyButton from "./SeconderyButton";
+import SeconderyButton from "../Buttons/SeconderyButton";
+import PrimaryButton from "../Buttons/PrimaryButton";
 
 const NavBar = () => {
   const navLinks = (

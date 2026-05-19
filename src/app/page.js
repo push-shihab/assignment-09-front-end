@@ -1,11 +1,13 @@
-import Banner from "@/components/Banner";
-import NavBar from "@/components/NavBar";
+import Banner from "@/components/Banner/Banner";
+import LatestRooms from "@/components/LatestRooms/LatestRooms";
+import NavBar from "@/components/NavBar/NavBar";
 
 export default function Home() {
   return (
-    <div className="text-4xl font-bold">
+    <div className="">
       <NavBar></NavBar>
       <Banner></Banner>
+      <LatestRooms></LatestRooms>
     </div>
   );
 }

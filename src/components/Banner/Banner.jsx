@@ -1,10 +1,10 @@
 import DotGrid from "./DotGrid";
-import PrimaryButton from "./PrimaryButton";
-import SeconderyButton from "./SeconderyButton";
+import PrimaryButton from "../Buttons/PrimaryButton";
+import SeconderyButton from "../Buttons/SeconderyButton";
 
 const Banner = () => {
   return (
-    <div className="relative h-150 w-full overflow-hidden bg-black">
+    <div className="relative h-190 w-full overflow-hidden bg-black">
       <div className="absolute inset-0 opacity-30">
         <DotGrid
           dotSize={5}
@@ -21,7 +21,7 @@ const Banner = () => {
 
       <div className="absolute inset-0 z-40 flex items-center justify-center">
         <div className="container mx-auto flex flex-col items-center text-center text-white">
-          <div className="border-l border-[#D97757] pl-3">
+          <div className="border-l-3 border-[#D97757] pl-3 ">
             Now with instant booking
           </div>
 
