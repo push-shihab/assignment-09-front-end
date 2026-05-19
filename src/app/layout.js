@@ -1,5 +1,7 @@
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/NavBar/NavBar";
+import Footer from "@/components/Footer/Footer";
 
 const spaceGrotest = Space_Grotesk({
   subsets: ["latin"],
@@ -17,7 +19,11 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${spaceGrotest.className} h-full antialiased`}
     >
-      <body className="">{children}</body>
+      <body className="">
+        <NavBar></NavBar>
+        {children}
+        <Footer></Footer>
+      </body>
     </html>
   );
 }

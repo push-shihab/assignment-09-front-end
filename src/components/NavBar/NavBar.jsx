@@ -43,7 +43,9 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="flex flex-col">
-            <a className="text-3xl cursor-pointer font-extrabold">Study Nook</a>
+            <a className="text-3xl cursor-pointer font-extrabold">
+              Study<span className="text-[#D97757]">Nook</span>
+            </a>
             <span className="text-[10px] text-[#D97757]">
               Find. Book. Study
             </span>
