@@ -1,10 +1,33 @@
+"use client";
 import LiquidEther from "../LiquidEther";
 import React from "react";
 import { StyledWrapper } from "../Style";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    const { data: res, error } = await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      image: data.image,
+      callbackURL: "http://localhost:3000/",
+    });
+    if (res) {
+      alert(`${res.user.name} your account created successfully`);
+      redirect("/login");
+    }
+  };
   return (
     <main className="bg-black relative overflow-hidden">
       <div
@@ -35,7 +58,7 @@ const Register = () => {
 
       <div className="absolute inset-0 z-40 flex items-center justify-center">
         <StyledWrapper>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <p className="title">Create Account</p>
             <p className="message">Fill in your details to get started</p>
             <div className="flex justify-center py-3">
@@ -56,19 +79,62 @@ const Register = () => {
             </div>
 
             <label>
-              <input className="input" type="text" required placeholder=" " />
+              <input
+                className="input"
+                type="text"
+                required
+                placeholder=" "
+                {...register("name", {
+                  required: "Name is required",
+                  minLength: {
+                    value: 3,
+                    message: "Minimum 3 characters",
+                  },
+                })}
+              />
               <span>Full Name</span>
             </label>
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
 
             <label>
-              <input className="input" type="email" required placeholder=" " />
+              <input
+                className="input"
+                type="email"
+                required
+                placeholder=" "
+                {...register("email", {
+                  required: "Email is required",
+                  minLength: {
+                    message: "Provide a valid Email",
+                  },
+                })}
+              />
               <span>Email</span>
             </label>
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
 
             <label>
-              <input className="input" type="text" placeholder=" " />
-              <span>Image URL (Optional)</span>
+              <input
+                className="input"
+                type="text"
+                required
+                placeholder=" "
+                {...register("image", {
+                  required: "Image URL is required",
+                  minLength: {
+                    message: "Provide a valid Image Link",
+                  },
+                })}
+              />
+              <span>Image URL</span>
             </label>
+            {errors.image && (
+              <p className="text-red-500 text-sm">{errors.image.message}</p>
+            )}
 
             <label>
               <input
@@ -76,9 +142,27 @@ const Register = () => {
                 type="password"
                 required
                 placeholder=" "
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                  validate: {
+                    hasUpperCase: (value) =>
+                      /[A-Z]/.test(value) ||
+                      "Must include at least one uppercase letter",
+                    hasLowerCase: (value) =>
+                      /[a-z]/.test(value) ||
+                      "Must include at least one lowercase letter",
+                  },
+                })}
               />
               <span>Password</span>
             </label>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
 
             <button className="submit" type="submit">
               Submit

@@ -57,8 +57,8 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-2">
-          <SeconderyButton name={"Login"} link={"#"}></SeconderyButton>
-          <PrimaryButton name={"Register"} link={"#"}></PrimaryButton>
+          <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>
+          <PrimaryButton name={"Register"} link={"/register"}></PrimaryButton>
         </div>
       </div>
     </nav>
