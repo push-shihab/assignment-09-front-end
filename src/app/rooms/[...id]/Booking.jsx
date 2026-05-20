@@ -104,6 +104,7 @@ const BookingCard = ({ room, userId }) => {
       totalBill,
       roomRate: room.rate,
       userId,
+      status: "Confirmed",
     };
 
     console.log(bookingData);

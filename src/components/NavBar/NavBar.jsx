@@ -27,7 +27,7 @@ const NavBar = async () => {
             <Link href={"/rooms/self"}>My Rooms</Link>
           </li>
           <li className="hover:text-[#D97757]">
-            <Link href={"/rooms"}>My Bookings</Link>
+            <Link href={"/rooms/bookings"}>My Bookings</Link>
           </li>
         </>
       )}
