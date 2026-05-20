@@ -20,6 +20,7 @@ const NewRoom = () => {
       rate: data.rate,
       amenities: data.amenities,
       id: session.session.userId,
+      bookings: 0,
     };
     const fetchData = await fetch(
       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/new`,

@@ -1,6 +1,12 @@
 import Image from "next/image";
+import Booking from "./Booking";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const RoomDetails = async ({ params }) => {
+  const { session } = await auth.api.getSession({
+    headers: await headers(),
+  });
   const { id } = await params;
   const fetchData = await fetch(`${process.env.FETCHURL}/rooms/${id[0]}`);
   const res = await fetchData.json();
@@ -92,81 +98,7 @@ const RoomDetails = async ({ params }) => {
           </div>
 
           <div className="w-full lg:w-80 shrink-0">
-            <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 flex flex-col gap-4 sticky top-6">
-              <div>
-                <p className="text-2xl font-bold text-yellow-400">
-                  ${data.rate}{" "}
-                  <span className="text-sm text-gray-400 font-normal">
-                    / hour
-                  </span>
-                </p>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Instant Booking Confirmation
-                </p>
-              </div>
-
-              <div className="divider my-0 border-[#2a2a2a]" />
-
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-500 uppercase tracking-widest">
-                  Date
-                </label>
-                <input
-                  type="date"
-                  defaultValue="2025-06-15"
-                  className="input input-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-500 uppercase tracking-widest">
-                  Start Time
-                </label>
-                <select className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500">
-                  <option>11:00 AM</option>
-                  <option>12:00 PM</option>
-                  <option>01:00 PM</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-500 uppercase tracking-widest">
-                  End Time
-                </label>
-                <select className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500">
-                  <option>01:00 PM</option>
-                  <option>02:00 PM</option>
-                  <option>03:00 PM</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-500 uppercase tracking-widest">
-                  Special Note (Optional)
-                </label>
-                <textarea
-                  placeholder="Any special requests..."
-                  rows={3}
-                  className="textarea textarea-sm bg-[#111] border border-[#333] text-white placeholder-gray-600 rounded-lg w-full resize-none focus:outline-none focus:border-yellow-500"
-                />
-              </div>
-
-              <div className="flex items-center justify-between bg-[#111] border border-[#2a2a2a] rounded-lg px-4 py-3">
-                <div>
-                  <p className="text-xs text-gray-400">2 hrs × $5/hr</p>
-                  <p className="text-xs text-gray-500">Total Cost</p>
-                </div>
-                <p className="text-xl font-bold text-yellow-400">$10</p>
-              </div>
-
-              <button className="btn w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded-lg border-none normal-case text-sm">
-                Confirm Booking →
-              </button>
-
-              <button className="btn btn-outline w-full border-[#333] text-white hover:bg-[#2a2a2a] hover:border-[#444] rounded-lg normal-case text-sm">
-                Login to Book
-              </button>
-            </div>
+            <Booking room={data} userId={session.userId}></Booking>
           </div>
         </div>
       </div>
