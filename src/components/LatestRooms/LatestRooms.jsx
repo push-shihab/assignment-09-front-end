@@ -2,7 +2,7 @@ import SeconderyButton from "../Buttons/SeconderyButton";
 import LatestRoom from "./LatestRoom";
 
 const LatestRooms = async () => {
-  const data = await fetch(`${process.env.FETCHURL}/rooms/latest`);
+  const data = await fetch(`${process.env.NEXT_PUBLIC_FETCHURL}/rooms/latest`);
   const latestRoomsData = await data.json();
   // console.log(latestRoomsData);
   return (

@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${spaceGrotest.className} h-full antialiased`}
     >
-      <body className="">
+      <body suppressHydrationWarning>
         <ThemeProvider>
           <NavBar></NavBar>
           {children}

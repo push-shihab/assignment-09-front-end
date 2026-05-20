@@ -1,7 +1,6 @@
 import Link from "next/link";
 import SeconderyButton from "../Buttons/SeconderyButton";
 import PrimaryButton from "../Buttons/PrimaryButton";
-import { authClient } from "@/lib/auth-client";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -11,7 +10,6 @@ const NavBar = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  // console.log(session);
   const navLinks = (
     <>
       <li className="hover:text-[#D97757]">
@@ -23,7 +21,7 @@ const NavBar = async () => {
       {session && (
         <>
           <li className="hover:text-[#D97757]">
-            <Link href={"/"}>Add Room</Link>
+            <Link href={"/rooms/new"}>Add Room</Link>
           </li>
           <li className="hover:text-[#D97757]">
             <Link href={"/rooms"}>My Rooms</Link>
