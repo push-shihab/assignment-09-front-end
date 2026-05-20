@@ -5,6 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import ThemeToggle from "../Theme/ThemeToggle";
 
 const NavBar = async () => {
   const session = await auth.api.getSession({
@@ -102,6 +103,7 @@ const NavBar = async () => {
               ></PrimaryButton>
             </>
           )}
+          <ThemeToggle></ThemeToggle>
         </div>
       </div>
     </nav>
