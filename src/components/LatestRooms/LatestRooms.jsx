@@ -4,7 +4,7 @@ import LatestRoom from "./LatestRoom";
 const LatestRooms = async () => {
   const data = await fetch(`${process.env.FETCHURL}/rooms/latest`);
   const latestRoomsData = await data.json();
-  console.log(latestRoomsData);
+  // console.log(latestRoomsData);
   return (
     <main className="bg-[#d9785725]">
       <div className="container mx-auto py-15 space-y-3">

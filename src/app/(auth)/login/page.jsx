@@ -20,6 +20,7 @@ const Login = () => {
       email: data.email,
       password: data.password,
       rememberMe: true,
+      callbackURL: "/",
     });
     if (res) {
       alert(`${res.user.name} your have been logged in successfully`);

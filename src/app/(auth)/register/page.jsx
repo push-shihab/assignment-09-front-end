@@ -21,6 +21,7 @@ const Register = () => {
       email: data.email,
       password: data.password,
       image: data.image,
+      callbackURL: "/",
     });
     if (res) {
       alert(`${res.user.name} your account created successfully`);

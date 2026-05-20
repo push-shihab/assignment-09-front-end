@@ -1,8 +1,16 @@
 import Link from "next/link";
 import SeconderyButton from "../Buttons/SeconderyButton";
 import PrimaryButton from "../Buttons/PrimaryButton";
+import { authClient } from "@/lib/auth-client";
+import { revalidatePath } from "next/cache";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-const NavBar = () => {
+const NavBar = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  // console.log(session);
   const navLinks = (
     <>
       <li className="hover:text-[#D97757]">
@@ -11,8 +19,29 @@ const NavBar = () => {
       <li className="hover:text-[#D97757]">
         <Link href={"/rooms"}>Rooms</Link>
       </li>
+      {session && (
+        <>
+          <li className="hover:text-[#D97757]">
+            <Link href={"/"}>Add Room</Link>
+          </li>
+          <li className="hover:text-[#D97757]">
+            <Link href={"/rooms"}>My Rooms</Link>
+          </li>
+          <li className="hover:text-[#D97757]">
+            <Link href={"/rooms"}>My Bookings</Link>
+          </li>
+        </>
+      )}
     </>
   );
+  const handleLogout = async () => {
+    "use server";
+    await auth.api.signOut({
+      headers: await headers(),
+    });
+    revalidatePath("/");
+    console.log(session);
+  };
   return (
     <nav className="bg-[#5227FF]">
       <div className="navbar container mx-auto text-white">
@@ -57,8 +86,22 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-2">
-          <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>
-          <PrimaryButton name={"Register"} link={"/register"}></PrimaryButton>
+          {session ? (
+            <button
+              onClick={handleLogout}
+              className="border border-[#D97757] rounded-box text-[16px] py-2.5 px-5"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>
+              <PrimaryButton
+                name={"Register"}
+                link={"/register"}
+              ></PrimaryButton>
+            </>
+          )}
         </div>
       </div>
     </nav>

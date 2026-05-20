@@ -12,6 +12,7 @@ const LatestRoom = ({ room }) => {
             alt={room.name}
             width={300}
             height={300}
+            priority
             className="w-full h-full object-cover"
           ></Image>
         </figure>
