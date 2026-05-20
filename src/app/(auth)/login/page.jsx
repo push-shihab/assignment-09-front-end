@@ -1,10 +1,34 @@
+"use client";
 import LiquidEther from "../LiquidEther";
 import React from "react";
 import { StyledWrapper } from "../Style";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    const { data: res, error } = await authClient.signIn.email({
+      email: data.email,
+      password: data.password,
+      rememberMe: true,
+    });
+    if (res) {
+      alert(`${res.user.name} your have been logged in successfully`);
+      redirect("/");
+    }
+    if (error) {
+      alert(error.message);
+    }
+  };
   return (
     <main className="bg-black relative overflow-hidden">
       <div
@@ -35,7 +59,7 @@ const Login = () => {
 
       <div className="absolute inset-0 z-40 flex items-center justify-center">
         <StyledWrapper>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <p className="title">Login</p>
             <p className="message">Enter your credentials to continue</p>
             <div className="flex justify-center py-3">
@@ -56,9 +80,23 @@ const Login = () => {
             </div>
 
             <label>
-              <input className="input" type="email" required placeholder=" " />
+              <input
+                className="input"
+                type="email"
+                required
+                placeholder=" "
+                {...register("email", {
+                  required: "Email is required",
+                  minLength: {
+                    message: "Provide a valid Email",
+                  },
+                })}
+              />
               <span>Email</span>
             </label>
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
 
             <label>
               <input
@@ -66,9 +104,27 @@ const Login = () => {
                 type="password"
                 required
                 placeholder=" "
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                  validate: {
+                    hasUpperCase: (value) =>
+                      /[A-Z]/.test(value) ||
+                      "Must include at least one uppercase letter",
+                    hasLowerCase: (value) =>
+                      /[a-z]/.test(value) ||
+                      "Must include at least one lowercase letter",
+                  },
+                })}
               />
               <span>Password</span>
             </label>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
 
             <button className="submit" type="submit">
               Login

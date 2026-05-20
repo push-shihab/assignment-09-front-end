@@ -21,7 +21,6 @@ const Register = () => {
       email: data.email,
       password: data.password,
       image: data.image,
-      callbackURL: "http://localhost:3000/",
     });
     if (res) {
       alert(`${res.user.name} your account created successfully`);
