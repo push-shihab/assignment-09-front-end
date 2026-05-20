@@ -24,25 +24,27 @@ const LatestRoom = ({ room }) => {
           <span className="font-bold text-xl text-[#5227FF]">
             {room.capacity}
           </span>
-          <div className="flex items-center gap-2">
-            {room.amenities.map((amenity, i) => (
-              <span
-                className="text-[#D97757] py-1.5 px-3 border border-[#D97757] rounded-3xl font-semibold text-[12px]"
-                key={i}
-              >
-                {amenity}
-              </span>
+          <div className="flex flex-wrap items-center gap-2">
+            {room.amenities.slice(0, 4).map((amenity, i) => (
+              <div key={i}>
+                <span className="text-[#D97757] py-1.5 px-3 border border-[#D97757] rounded-3xl font-semibold text-[12px]">
+                  {amenity}
+                </span>
+              </div>
             ))}
           </div>
           <div className="border-t border-neutral opacity-20 my-3"></div>
           <div className="card-actions flex justify-between items-center">
             <p>
               <span className="text-[#D97757] text-3xl font-bold">
-                ${room.hourlyRate[(0, 1)]}
+                ${room.hourlyRate}
               </span>
               <span className="text-[#858585]"> / hr</span>
             </p>
-            <PrimaryButton name={"View Details"} link={"/"}></PrimaryButton>
+            <PrimaryButton
+              name={"View Details"}
+              link={`/rooms/${room._id}`}
+            ></PrimaryButton>
           </div>
         </div>
       </div>
