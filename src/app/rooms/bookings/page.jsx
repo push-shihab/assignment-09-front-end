@@ -1,6 +1,16 @@
-import React from "react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import Image from "next/image";
 
-const AllBookings = () => {
+const AllBookings = async () => {
+  const { session } = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const data = await fetch(
+    `${process.env.FETCHURL}/rooms/bookings/${session.userId}`,
+  );
+  const res = await data.json();
+  console.log(res);
   return (
     <main className="py-10 px-4">
       <div className="container mx-auto space-y-8">
@@ -20,7 +30,7 @@ const AllBookings = () => {
                 Total Bookings
               </p>
               <p className="text-3xl font-extrabold tracking-tight text-base-content">
-                12
+                {res.length}
               </p>
             </div>
           </div>
@@ -80,47 +90,57 @@ const AllBookings = () => {
               </thead>
 
               <tbody className="divide-y divide-base-300">
-                <tr className="hover:bg-base-300/30 transition-colors duration-150">
-                  <td className="py-4 px-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-base-300 flex items-center justify-center text-lg flex-shrink-0">
-                        🏛️
+                {res.map((booking) => (
+                  <tr
+                    key={booking._id}
+                    className="hover:bg-base-300/30 transition-colors duration-150"
+                  >
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 flex items-center justify-center text-lg shrink-0">
+                          <Image
+                            src={booking.roomImage}
+                            alt={booking.roomName}
+                            width={300}
+                            height={300}
+                            className="w-full object-cover rounded-box"
+                          ></Image>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm leading-tight">
+                            {booking.roomName}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-sm leading-tight">
-                          Quiet Focus Room A
-                        </p>
-                        <p className="text-xs text-base-content/45 mt-0.5">
-                          Floor 3
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-4 px-4 text-sm text-base-content/70 whitespace-nowrap">
-                    Jun 20, 2025
-                  </td>
-                  <td className="py-4 px-4 text-sm text-base-content/70 whitespace-nowrap">
-                    10:00 – 13:00
-                  </td>
-                  <td className="py-4 px-4 whitespace-nowrap">
-                    <span className="text-sm text-base-content/70">3 hrs</span>
-                    <span className="text-base-content/30 mx-1">·</span>
-                    <span className="text-sm font-semibold text-warning">
-                      $15
-                    </span>
-                  </td>
-                  <td className="py-4 px-4">
-                    <span className="badge badge-success badge-outline gap-1.5 font-semibold text-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-success inline-block" />
-                      Confirmed
-                    </span>
-                  </td>
-                  <td className="py-4 px-4">
-                    <button className="btn btn-xs btn-outline btn-error rounded-md px-3">
-                      Cancel
-                    </button>
-                  </td>
-                </tr>
+                    </td>
+                    <td className="py-4 px-4 text-sm text-base-content/70 whitespace-nowrap">
+                      {booking.date}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-base-content/70 whitespace-nowrap">
+                      {booking.startTime} – {booking.endTime}
+                    </td>
+                    <td className="py-4 px-4 whitespace-nowrap">
+                      <span className="text-sm text-base-content/70">
+                        {booking.totalHours} hrs
+                      </span>
+                      <span className="text-base-content/30 mx-1">·</span>
+                      <span className="text-sm font-semibold text-warning">
+                        $ {booking.totalBill}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4">
+                      <span className="badge badge-success badge-outline gap-1.5 font-semibold text-xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success inline-block" />
+                        {booking.status ? "Confirmed" : ""}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4">
+                      <button className="btn btn-xs btn-outline btn-error rounded-md px-3">
+                        Cancel
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

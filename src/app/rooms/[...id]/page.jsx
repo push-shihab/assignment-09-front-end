@@ -2,6 +2,7 @@ import Image from "next/image";
 import Booking from "./Booking";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import EditRoom from "./EditRoom";
 
 const RoomDetails = async ({ params }) => {
   const { session } = await auth.api.getSession({
@@ -11,6 +12,7 @@ const RoomDetails = async ({ params }) => {
   const fetchData = await fetch(`${process.env.FETCHURL}/rooms/${id[0]}`);
   const res = await fetchData.json();
   const data = res[0];
+  const isOwner = session.userId === data.id;
   return (
     <main className=" bg-[#111111]">
       <div className="min-h-screen text-white p-6 container mx-auto">
@@ -54,7 +56,6 @@ const RoomDetails = async ({ params }) => {
                 </span>
               </div>
             </div>
-
             <div>
               <span className="badge bg-[#2a2a2a] border border-[#3a3a3a] text-white text-sm px-4 py-3 rounded-lg">
                 <span className="text-yellow-400 font-bold mr-1">47</span> Total
@@ -62,19 +63,19 @@ const RoomDetails = async ({ params }) => {
               </span>
             </div>
 
-            <div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">
-                Owner Controls
-              </p>
-              <div className="flex gap-3">
-                <button className="flex-1 btn btn-sm bg-[#3a3a1a] hover:bg-[#4a4a2a] border border-[#5a5a2a] text-yellow-300 rounded-lg normal-case">
-                  ✏️ Edit Room
-                </button>
-                <button className="flex-1 btn btn-sm bg-[#3a1a1a] hover:bg-[#4a2a2a] border border-[#5a2a2a] text-red-400 rounded-lg normal-case">
-                  🗑️ Delete Room
-                </button>
+            {isOwner && (
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">
+                  Owner Controls
+                </p>
+                <div className="flex gap-3">
+                  <EditRoom room={data}></EditRoom>
+                  <button className="flex-1 btn btn-sm bg-[#3a1a1a] hover:bg-[#4a2a2a] border border-[#5a2a2a] text-red-400 rounded-lg normal-case">
+                    🗑️ Delete Room
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
             <p className="text-sm text-gray-400 leading-relaxed">
               {data.description}
