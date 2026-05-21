@@ -64,7 +64,7 @@ const NavBar = async () => {
         </div>
         <div className="navbar-end gap-2">
           {session ? (
-            <Profile handleLogout={handleLogout}></Profile>
+            <Profile handleLogout={handleLogout} session={session}></Profile>
           ) : (
             <>
               <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>

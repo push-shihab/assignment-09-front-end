@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
-const Profile = ({ handleLogout }) => {
+const Profile = ({ handleLogout, session }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -22,11 +23,16 @@ const Profile = ({ handleLogout }) => {
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center gap-2 md:gap-3 px-2 py-2 md:px-4 rounded-full bg-[#1a1a1a] border border-white/10 hover:border-[#D97757]/50 transition-all duration-300 shadow-lg group"
       >
-        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-[#D97757] shadow-md shadow-[#D97757]/30 shrink-0">
-          AR
+        <div className="w-8 h-8 rounded-full overflow-hidden shadow-md shadow-[#D97757]/30 shrink-0 relative">
+          <Image
+            src={session.user.image}
+            alt={session.user.name}
+            fill
+            className="object-cover"
+          />
         </div>
         <span className="hidden sm:inline text-white font-medium text-sm tracking-wide">
-          Ayaan Rahman
+          {session.user.name}
         </span>
         <svg
           className={`hidden sm:block w-4 h-4 text-white/50 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -52,9 +58,9 @@ const Profile = ({ handleLogout }) => {
       >
         <div className="px-5 py-4 border-b border-white/10">
           <p className="text-white font-semibold text-base tracking-wide">
-            Ayaan Rahman
+            {session.user.name}
           </p>
-          <p className="text-white/40 text-sm mt-0.5">ayaan@gmail.com</p>
+          <p className="text-white/40 text-sm mt-0.5">{session.user.email}</p>
         </div>
 
         <div className="py-2">
