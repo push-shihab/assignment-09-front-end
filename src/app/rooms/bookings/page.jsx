@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
+import CancelBooking from "./CancelBooking";
 
 const AllBookings = async () => {
   const { session } = await auth.api.getSession({
@@ -10,7 +11,6 @@ const AllBookings = async () => {
     `${process.env.FETCHURL}/rooms/bookings/${session.userId}`,
   );
   const res = await data.json();
-  console.log(res);
   return (
     <main className="py-10 px-4">
       <div className="container mx-auto space-y-8">
@@ -129,15 +129,17 @@ const AllBookings = async () => {
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="badge badge-success badge-outline gap-1.5 font-semibold text-xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-success inline-block" />
-                        {booking.status ? "Confirmed" : ""}
+                      <span
+                        className={`badge ${booking.status == "Confirmed" ? "badge-success" : "badge-error"} badge-outline gap-1.5 font-semibold text-xs`}
+                      >
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full ${booking.status == "Confirmed" ? "bg-success" : "bg-error"} inline-block`}
+                        />
+                        {booking.status}
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <button className="btn btn-xs btn-outline btn-error rounded-md px-3">
-                        Cancel
-                      </button>
+                      <CancelBooking booking={booking}></CancelBooking>
                     </td>
                   </tr>
                 ))}

@@ -50,49 +50,11 @@ const BookingCard = ({ room, userId }) => {
 
   const totalBill = totalHours * room.rate;
 
-  // const checkBookingConflict = async (roomId, date, startTime, endTime) => {
-  //   try {
-  //     const fetchedData = await fetch(
-  //       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${roomId}&date=${date}&startTime=${startTime}&endTime=${endTime}`,
-  //     );
-  //     const existingBookings = await fetchedData.json();
-  //     console.log(existingBookings);
-
-  //     // const hasConflict = existingBookings.some((booking) => {
-  //     //   const existingStart = dayjs(booking.startTime, "hh:mm A");
-
-  //     //   const existingEnd = dayjs(booking.endTime, "hh:mm A");
-
-  //     //   const newStart = dayjs(startTime, "hh:mm A");
-
-  //     //   const newEnd = dayjs(endTime, "hh:mm A");
-
-  //     //   return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
-  //     // });
-
-  //     // return hasConflict;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return false;
-  //   }
-  // };
-
   const onSubmit = async (data) => {
     if (!totalHours) {
       alert("Please select valid booking times");
       return;
     }
-    // const hasConflict = await checkBookingConflict(
-    //   room._id,
-    //   data.date,
-    //   data.startTime,
-    //   data.endTime,
-    // );
-
-    // if (hasConflict) {
-    //   alert("This room is already booked during this time.");
-    //   return;
-    // }
 
     const fetchedData = await fetch(
       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${room._id}&date=${data.date}&startTime=${data.startTime}&endTime=${data.endTime}`,
