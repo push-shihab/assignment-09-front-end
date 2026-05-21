@@ -68,7 +68,7 @@ const NewRoom = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Quiet Focus Room A"
+                    placeholder="e.g. Coding Quiz"
                     className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
                     {...register("name", {
                       required: "Name is required",
@@ -90,7 +90,7 @@ const NewRoom = () => {
                     Description <span className="text-[#f0b429]">*</span>
                   </label>
                   <textarea
-                    placeholder="Describe the room, its features, and any special notes..."
+                    placeholder="Describe the room..."
                     rows={4}
                     className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors resize-y"
                     {...register("description", {
@@ -147,8 +147,9 @@ const NewRoom = () => {
                       Floor <span className="text-[#f0b429]">*</span>
                     </label>
                     <input
-                      type="text"
-                      placeholder="e.g. 3rd Floor"
+                      type="number"
+                      step="1"
+                      placeholder="e.g. 2nd Floor"
                       className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
                       {...register("floor", {
                         required: "Floor number is required",
@@ -167,7 +168,8 @@ const NewRoom = () => {
                     </label>
                     <input
                       type="number"
-                      placeholder="e.g. 4"
+                      placeholder="e.g. 5"
+                      step="1"
                       className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
                       {...register("capacity", {
                         required: "Capacity is required",
@@ -195,8 +197,8 @@ const NewRoom = () => {
                     </span>
                     <input
                       type="number"
-                      defaultValue="5.00"
-                      step="0.01"
+                      defaultValue="5"
+                      step="1"
                       className="flex-1 bg-transparent px-4 py-2.5 text-[#eeeeee] text-sm focus:outline-none"
                       {...register("rate", {
                         required: "Hourly rate is required",

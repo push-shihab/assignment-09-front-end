@@ -50,31 +50,32 @@ const BookingCard = ({ room, userId }) => {
 
   const totalBill = totalHours * room.rate;
 
-  //   const checkBookingConflict = async (roomId, date, startTime, endTime) => {
-  //     try {
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/bookings?roomId=${roomId}&date=${date}`,
-  //       );
-  //       const existingBookings = await response.json();
+  // const checkBookingConflict = async (roomId, date, startTime, endTime) => {
+  //   try {
+  //     const fetchedData = await fetch(
+  //       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${roomId}&date=${date}&startTime=${startTime}&endTime=${endTime}`,
+  //     );
+  //     const existingBookings = await fetchedData.json();
+  //     console.log(existingBookings);
 
-  //       const hasConflict = existingBookings.some((booking) => {
-  //         const existingStart = dayjs(booking.startTime, "hh:mm A");
+  //     // const hasConflict = existingBookings.some((booking) => {
+  //     //   const existingStart = dayjs(booking.startTime, "hh:mm A");
 
-  //         const existingEnd = dayjs(booking.endTime, "hh:mm A");
+  //     //   const existingEnd = dayjs(booking.endTime, "hh:mm A");
 
-  //         const newStart = dayjs(startTime, "hh:mm A");
+  //     //   const newStart = dayjs(startTime, "hh:mm A");
 
-  //         const newEnd = dayjs(endTime, "hh:mm A");
+  //     //   const newEnd = dayjs(endTime, "hh:mm A");
 
-  //         return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
-  //       });
+  //     //   return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
+  //     // });
 
-  //       return hasConflict;
-  //     } catch (error) {
-  //       console.log(error);
-  //       return false;
-  //     }
-  //   };
+  //     // return hasConflict;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // };
 
   const onSubmit = async (data) => {
     if (!totalHours) {
@@ -92,6 +93,16 @@ const BookingCard = ({ room, userId }) => {
     //   alert("This room is already booked during this time.");
     //   return;
     // }
+
+    const fetchedData = await fetch(
+      `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${room._id}&date=${data.date}&startTime=${data.startTime}&endTime=${data.endTime}`,
+    );
+    const existingBookings = await fetchedData.json();
+    console.log(existingBookings);
+    if (existingBookings.length > 0) {
+      alert("Book a different slot.");
+      return;
+    }
     const bookingData = {
       roomId: room._id,
       roomName: room.name,
@@ -106,8 +117,6 @@ const BookingCard = ({ room, userId }) => {
       userId,
       status: "Confirmed",
     };
-
-    console.log(bookingData);
 
     try {
       const response = await fetch(

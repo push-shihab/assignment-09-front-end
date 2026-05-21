@@ -3,6 +3,7 @@ import Booking from "./Booking";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import EditRoom from "./EditRoom";
+import DeleteRoom from "./DeleteRoom";
 
 const RoomDetails = async ({ params }) => {
   const { session } = await auth.api.getSession({
@@ -58,8 +59,10 @@ const RoomDetails = async ({ params }) => {
             </div>
             <div>
               <span className="badge bg-[#2a2a2a] border border-[#3a3a3a] text-white text-sm px-4 py-3 rounded-lg">
-                <span className="text-yellow-400 font-bold mr-1">47</span> Total
-                Bookings
+                <span className="text-yellow-400 font-bold mr-1">
+                  ${data.bookings}
+                </span>{" "}
+                Total Bookings
               </span>
             </div>
 
@@ -70,9 +73,7 @@ const RoomDetails = async ({ params }) => {
                 </p>
                 <div className="flex gap-3">
                   <EditRoom room={data}></EditRoom>
-                  <button className="flex-1 btn btn-sm bg-[#3a1a1a] hover:bg-[#4a2a2a] border border-[#5a2a2a] text-red-400 rounded-lg normal-case">
-                    🗑️ Delete Room
-                  </button>
+                  <DeleteRoom room={data}></DeleteRoom>
                 </div>
               </div>
             )}
