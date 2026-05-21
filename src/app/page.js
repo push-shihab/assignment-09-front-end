@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner/Banner";
 import EverythingSection from "@/components/EverythingSection/EverythingSection";
 import LatestRooms from "@/components/LatestRooms/LatestRooms";
+import ReadySection from "@/components/ReadySection/ReadySection";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Banner></Banner>
       <LatestRooms></LatestRooms>
       <EverythingSection></EverythingSection>
+      <ReadySection></ReadySection>
     </div>
   );
 }
