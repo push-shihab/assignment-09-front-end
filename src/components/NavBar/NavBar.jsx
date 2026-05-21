@@ -1,46 +1,24 @@
-import Link from "next/link";
 import SeconderyButton from "../Buttons/SeconderyButton";
 import PrimaryButton from "../Buttons/PrimaryButton";
-import { revalidatePath } from "next/cache";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import ThemeToggle from "../Theme/ThemeToggle";
+import NavLinks from "./NavLinks";
+import Profile from "./Profile";
 
 const NavBar = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  const navLinks = (
-    <>
-      <li className="hover:text-[#D97757]">
-        <Link href={"/"}>Home</Link>
-      </li>
-      <li className="hover:text-[#D97757]">
-        <Link href={"/rooms"}>Rooms</Link>
-      </li>
-      {session && (
-        <>
-          <li className="hover:text-[#D97757]">
-            <Link href={"/rooms/new"}>Add Room</Link>
-          </li>
-          <li className="hover:text-[#D97757]">
-            <Link href={"/rooms/self"}>My Rooms</Link>
-          </li>
-          <li className="hover:text-[#D97757]">
-            <Link href={"/rooms/bookings"}>My Bookings</Link>
-          </li>
-        </>
-      )}
-    </>
-  );
+
   const handleLogout = async () => {
     "use server";
     await auth.api.signOut({
       headers: await headers(),
     });
     revalidatePath("/");
-    console.log(session);
   };
+
   return (
     <nav className="bg-[#5227FF]">
       <div className="navbar container mx-auto text-white">
@@ -65,9 +43,9 @@ const NavBar = async () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu text-white menu-sm dropdown-content bg-[#1a1a1a] rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              {navLinks}
+              <NavLinks session={session}></NavLinks>
             </ul>
           </div>
           <div className="flex flex-col">
@@ -81,17 +59,12 @@ const NavBar = async () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="flex gap-2 justify-center items-center text-[16px]">
-            {navLinks}
+            <NavLinks session={session}></NavLinks>
           </ul>
         </div>
         <div className="navbar-end gap-2">
           {session ? (
-            <button
-              onClick={handleLogout}
-              className="border border-[#D97757] rounded-box text-[16px] py-2.5 px-5"
-            >
-              Logout
-            </button>
+            <Profile handleLogout={handleLogout}></Profile>
           ) : (
             <>
               <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>

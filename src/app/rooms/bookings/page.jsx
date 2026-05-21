@@ -40,7 +40,7 @@ const AllBookings = async () => {
                 Confirmed
               </p>
               <p className="text-3xl font-extrabold tracking-tight text-success">
-                8
+                {res.filter((booking) => booking.status == "Confirmed").length}
               </p>
             </div>
           </div>
@@ -50,7 +50,7 @@ const AllBookings = async () => {
                 Cancelled
               </p>
               <p className="text-3xl font-extrabold tracking-tight text-error">
-                4
+                {res.filter((booking) => booking.status == "Canceled").length}
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ const AllBookings = async () => {
                 Total Spent
               </p>
               <p className="text-3xl font-extrabold tracking-tight text-warning">
-                $86
+                $ {res.reduce((acc, booking) => acc + booking.totalBill, 0)}
               </p>
             </div>
           </div>
