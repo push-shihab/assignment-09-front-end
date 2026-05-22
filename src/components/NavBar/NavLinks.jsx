@@ -5,7 +5,6 @@ import React from "react";
 
 const NavLinks = ({ session }) => {
   const path = usePathname();
-  console.log(path);
 
   return (
     <>

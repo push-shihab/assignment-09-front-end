@@ -2,21 +2,18 @@ import SeconderyButton from "../Buttons/SeconderyButton";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import ThemeToggle from "../Theme/ThemeToggle";
 import NavLinks from "./NavLinks";
 import Profile from "./Profile";
+import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
 const NavBar = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  const handleLogout = async () => {
+  const revalidatePathForLogout = async () => {
     "use server";
-    await auth.api.signOut({
-      headers: await headers(),
-    });
-    revalidatePath("/");
+    await revalidatePath("/login");
   };
 
   return (
@@ -43,28 +40,31 @@ const NavBar = async () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu text-white menu-sm dropdown-content bg-[#1a1a1a] rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu text-white menu-sm dropdown-content bg-[#1a1a1a] rounded-box z-50 mt-3 w-52 p-2 shadow"
             >
               <NavLinks session={session}></NavLinks>
             </ul>
           </div>
           <div className="flex flex-col">
-            <a className="text-3xl cursor-pointer font-extrabold">
+            <Link href={"/"} className="text-3xl cursor-pointer font-extrabold">
               Study<span className="text-[#D97757]">Nook</span>
-            </a>
+            </Link>
             <span className="text-[10px] text-[#D97757]">
               Find. Book. Study
             </span>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="flex gap-2 justify-center items-center text-[16px]">
+          <ul className="flex gap-4 justify-center items-center text-[16px]">
             <NavLinks session={session}></NavLinks>
           </ul>
         </div>
         <div className="navbar-end gap-2">
           {session ? (
-            <Profile handleLogout={handleLogout} session={session}></Profile>
+            <Profile
+              revalidatePathForLogout={revalidatePathForLogout}
+              session={session}
+            ></Profile>
           ) : (
             <>
               <SeconderyButton name={"Login"} link={"/login"}></SeconderyButton>
@@ -74,7 +74,6 @@ const NavBar = async () => {
               ></PrimaryButton>
             </>
           )}
-          <ThemeToggle></ThemeToggle>
         </div>
       </div>
     </nav>

@@ -1,9 +1,17 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
-const Profile = ({ handleLogout, session }) => {
+const Profile = ({ session, revalidatePathForLogout }) => {
+  const handleLogout = async () => {
+    await authClient.signOut();
+    await revalidatePathForLogout();
+    redirect("/login");
+  };
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -13,13 +21,14 @@ const Profile = ({ handleLogout, session }) => {
         setOpen(false);
       }
     }
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
     <div ref={ref} className="relative inline-block">
       <button
+        onMouseDown={(e) => e.stopPropagation()}
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center gap-2 md:gap-3 px-2 py-2 md:px-4 rounded-full bg-[#1a1a1a] border border-white/10 hover:border-[#D97757]/50 transition-all duration-300 shadow-lg group"
       >
@@ -50,7 +59,7 @@ const Profile = ({ handleLogout, session }) => {
       </button>
 
       <div
-        className={`z-20 absolute right-0 sm:left-0 mt-3 w-64 md:w-72 rounded-2xl bg-[#1a1a1a] border border-white/10 shadow-2xl shadow-black/60 overflow-hidden transition-all duration-300 origin-top ${
+        className={`z-40 absolute right-0 sm:left-0 mt-3 w-64 md:w-72 rounded-2xl bg-[#1a1a1a] border border-white/10 shadow-2xl shadow-black/60 overflow-hidden transition-all duration-300 origin-top ${
           open
             ? "opacity-100 scale-y-100 translate-y-0"
             : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none"
@@ -64,26 +73,29 @@ const Profile = ({ handleLogout, session }) => {
         </div>
 
         <div className="py-2">
-          <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
-            <span className="text-lg">📋</span>
-            <span className="text-sm font-medium tracking-wide">
-              My Listings
-            </span>
-            <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#D97757] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-          </button>
-
-          <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
-            <span className="text-lg">📅</span>
-            <span className="text-sm font-medium tracking-wide">
-              My Bookings
-            </span>
-            <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#D97757] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-          </button>
+          <Link href={"/rooms/self"} className="cursor-pointer">
+            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
+              <span className="text-lg">📋</span>
+              <span className="text-sm font-medium tracking-wide">
+                My Rooms
+              </span>
+              <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#D97757] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            </button>
+          </Link>
+          <Link href={"/rooms/bookings"} className="cursor-pointer">
+            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
+              <span className="text-lg">📅</span>
+              <span className="text-sm font-medium tracking-wide">
+                My Bookings
+              </span>
+              <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#D97757] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            </button>
+          </Link>
         </div>
 
         <div className="border-t border-white/10 py-2">
           <button
-            className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-[#5227FF] hover:text-white hover:bg-[#5227FF]/20 transition-all duration-200 group"
+            className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-[#5227FF] hover:text-white hover:bg-[#5227FF]/20 transition-all duration-200 group cursor-pointer"
             onClick={handleLogout}
           >
             <span className="text-lg">🚪</span>

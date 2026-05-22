@@ -2,7 +2,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
-import { ThemeProvider } from "@/components/Theme/ThemeProvider";
+import { Toaster } from "react-hot-toast";
 
 const spaceGrotest = Space_Grotesk({
   subsets: ["latin"],
@@ -21,11 +21,16 @@ export default function RootLayout({ children }) {
       className={`${spaceGrotest.className} h-full antialiased`}
     >
       <body suppressHydrationWarning>
-        <ThemeProvider>
-          <NavBar></NavBar>
-          {children}
-          <Footer></Footer>
-        </ThemeProvider>
+        <NavBar></NavBar>
+        {children}
+        <Footer></Footer>
+        <Toaster
+          style={{
+            border: "1px solid #D97757",
+            padding: "16px",
+            color: "#D97757",
+          }}
+        ></Toaster>
       </body>
     </html>
   );

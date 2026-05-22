@@ -9,21 +9,21 @@ const RoomDetails = async ({ params }) => {
   const { session } = await auth.api.getSession({
     headers: await headers(),
   });
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
   const { id } = await params;
-  const fetchData = await fetch(`${process.env.FETCHURL}/rooms/${id[0]}`);
+  const fetchData = await fetch(`${process.env.FETCHURL}/rooms/${id[0]}`, {
+    headers: {
+      authorization: token,
+    },
+  });
   const res = await fetchData.json();
   const data = res[0];
   const isOwner = session.userId === data.id;
   return (
     <main className=" bg-[#111111]">
       <div className="min-h-screen text-white p-6 container mx-auto">
-        <a
-          href="#"
-          className="text-sm text-gray-400 hover:text-white mb-6 inline-block"
-        >
-          ← Back to Rooms
-        </a>
-
         <div className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto">
           <div className="flex-1 flex flex-col gap-5">
             <div className="rounded-xl bg-[#1e2e2a] flex items-center justify-center overflow-hidden">
@@ -38,29 +38,20 @@ const RoomDetails = async ({ params }) => {
             <div>
               <h1 className="text-3xl font-bold">{data.name}</h1>
               <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-gray-300">
-                <span>
-                  📍 {data.floor}
-                  {data.floor.trim() === "1" ? (
-                    <>st</>
-                  ) : data.floor.trim() === "2" ? (
-                    <>nd</>
-                  ) : data.floor.trim() === "3" ? (
-                    <>rd</>
-                  ) : (
-                    <>th</>
-                  )}
-                </span>
+                <span>📍 Floor: {data.floor}</span>
                 <span>👥 ${data.capacity} people</span>
                 <span>
                   🔵 Created by{" "}
-                  <span className="text-blue-400 font-medium">Sadia Karim</span>
+                  <span className="text-blue-400 font-medium">
+                    {data.userName}
+                  </span>
                 </span>
               </div>
             </div>
             <div>
               <span className="badge bg-[#2a2a2a] border border-[#3a3a3a] text-white text-sm px-4 py-3 rounded-lg">
-                <span className="text-yellow-400 font-bold mr-1">
-                  ${data.bookings}
+                <span className="text-[#D97757] font-bold mr-1">
+                  {data.bookings}
                 </span>{" "}
                 Total Bookings
               </span>

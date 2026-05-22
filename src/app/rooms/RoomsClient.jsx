@@ -30,7 +30,7 @@ const RoomsClient = ({ allRooms }) => {
 
   return (
     <main className="bg-[#d9785725]">
-      <div className="container mx-auto space-y-7">
+      <div className="container mx-auto space-y-7 px-5">
         <section className="pt-8">
           <h1 className="text-3xl font-bold">Available Study Rooms</h1>
           <p className="text-[#858585]">
@@ -38,8 +38,8 @@ const RoomsClient = ({ allRooms }) => {
           </p>
         </section>
 
-        <section className="flex justify-between items-center">
-          <div>
+        <section className="flex justify-between items-center flex-wrap">
+          <div className="pb-10 xl:pb-0">
             <StyledWrapper>
               <div className="group">
                 <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@ const RoomsClient = ({ allRooms }) => {
 
         <section className="pb-10">
           {filteredRooms.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
               {filteredRooms.map((room) => (
                 <LatestRoom key={room._id} room={room} />
               ))}

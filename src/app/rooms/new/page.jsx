@@ -1,6 +1,8 @@
 "use client";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const NewRoom = () => {
   const { data: session } = useSession();
@@ -21,17 +23,29 @@ const NewRoom = () => {
       amenities: data.amenities,
       id: session.session.userId,
       bookings: 0,
+      userName: session.user.name,
     };
+    const {
+      data: { token },
+    } = await authClient.token();
     const fetchData = await fetch(
       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/new`,
       {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+          authorization: token,
+        },
         body: JSON.stringify(roomData),
       },
     );
     const res = await fetchData.json();
-    console.log(res);
+    if (res.acknowledged) {
+      toast.success("Room has created successfully👏");
+      redirect("/rooms");
+    } else {
+      toast.error("Something wronged happened💔");
+    }
   };
 
   const amenities = [
@@ -44,19 +58,25 @@ const NewRoom = () => {
   ];
 
   return (
-    <main>
-      <div className="container mx-auto">
-        <h1>Add a New Room</h1>
-        <p>Fill in the details below to list your study room on StudyNook</p>
+    <main className="bg-[#D97757]/20">
+      <div className="container mx-auto py-10 flex flex-col items-center">
+        <div className="space-y-3">
+          <h1 className="text-[#D97757] text-4xl font-bold text-center">
+            Add a New Room
+          </h1>
+          <p className="text-[#858585]">
+            Fill in the details below to list your study room on StudyNook
+          </p>
+        </div>
         <div className="min-h-screen flex flex-col items-center py-10 px-4">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-full max-w-xl bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 space-y-8 shadow-2xl"
+            className=" w-full bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 space-y-8 shadow-2xl"
           >
             <div>
               <div className="flex items-center gap-2 mb-5 border-b border-[#2e2e2e] pb-3">
                 <span className="text-lg">📋</span>
-                <h2 className="text-[#f0b429] text-xs font-bold tracking-widest uppercase">
+                <h2 className="text-[#D97757] text-xs font-bold tracking-widest uppercase">
                   Basic Information
                 </h2>
               </div>
@@ -64,12 +84,12 @@ const NewRoom = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-[#cccccc] text-sm mb-1">
-                    Room Name <span className="text-[#f0b429]">*</span>
+                    Room Name <span className="text-[#D97757]">*</span>
                   </label>
                   <input
                     type="text"
                     placeholder="e.g. Coding Quiz"
-                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
+                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#D97757] transition-colors"
                     {...register("name", {
                       required: "Name is required",
                       minLength: {
@@ -87,12 +107,12 @@ const NewRoom = () => {
 
                 <div>
                   <label className="block text-[#cccccc] text-sm mb-1">
-                    Description <span className="text-[#f0b429]">*</span>
+                    Description <span className="text-[#D97757]">*</span>
                   </label>
                   <textarea
                     placeholder="Describe the room..."
                     rows={4}
-                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors resize-y"
+                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#D97757] transition-colors resize-y"
                     {...register("description", {
                       required: "Description is required",
                       minLength: {
@@ -110,16 +130,15 @@ const NewRoom = () => {
 
                 <div>
                   <label className="block text-[#cccccc] text-sm mb-1">
-                    Image URL <span className="text-[#f0b429]">*</span>
+                    Image URL <span className="text-[#D97757]">*</span>
                   </label>
                   <input
                     type="url"
                     placeholder="https://example.com/room-photo.jpg"
-                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
+                    className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#D97757] transition-colors"
                     {...register("image", {
                       required: "Image URL is required",
                       pattern: {
-                        value: /^https?:\/\/.+/,
                         message: "Provide a valid image URL",
                       },
                     })}
@@ -135,7 +154,7 @@ const NewRoom = () => {
 
             <div>
               <div className="flex items-center gap-2 mb-5 border-b border-[#2e2e2e] pb-3">
-                <h2 className="text-[#f0b429] text-xs font-bold tracking-widest uppercase">
+                <h2 className="text-[#D97757] text-xs font-bold tracking-widest uppercase">
                   Room Specifications
                 </h2>
               </div>
@@ -144,13 +163,13 @@ const NewRoom = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[#cccccc] text-sm mb-1">
-                      Floor <span className="text-[#f0b429]">*</span>
+                      Floor <span className="text-[#D97757]">*</span>
                     </label>
                     <input
                       type="number"
                       step="1"
                       placeholder="e.g. 2nd Floor"
-                      className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
+                      className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#D97757] transition-colors"
                       {...register("floor", {
                         required: "Floor number is required",
                       })}
@@ -164,13 +183,13 @@ const NewRoom = () => {
                   <div>
                     <label className="block text-[#cccccc] text-sm mb-1">
                       Capacity (people){" "}
-                      <span className="text-[#f0b429]">*</span>
+                      <span className="text-[#D97757]">*</span>
                     </label>
                     <input
                       type="number"
                       placeholder="e.g. 5"
                       step="1"
-                      className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#f0b429] transition-colors"
+                      className="w-full bg-[#111111] border border-[#2e2e2e] rounded-lg px-4 py-2.5 text-[#eeeeee] text-sm placeholder-[#444444] focus:outline-none focus:border-[#D97757] transition-colors"
                       {...register("capacity", {
                         required: "Capacity is required",
                         min: {
@@ -189,9 +208,9 @@ const NewRoom = () => {
 
                 <div>
                   <label className="block text-[#cccccc] text-sm mb-1">
-                    Hourly Rate (USD) <span className="text-[#f0b429]">*</span>
+                    Hourly Rate (USD) <span className="text-[#D97757]">*</span>
                   </label>
-                  <div className="flex items-center bg-[#111111] border border-[#2e2e2e] rounded-lg overflow-hidden focus-within:border-[#f0b429] transition-colors">
+                  <div className="flex items-center bg-[#111111] border border-[#2e2e2e] rounded-lg overflow-hidden focus-within:border-[#D97757] transition-colors">
                     <span className="px-3 text-[#666666] text-sm border-r border-[#2e2e2e]">
                       $
                     </span>
@@ -221,7 +240,7 @@ const NewRoom = () => {
             <div>
               <div className="flex items-center gap-2 mb-5 border-b border-[#2e2e2e] pb-3">
                 <span className="text-lg">✨</span>
-                <h2 className="text-[#f0b429] text-xs font-bold tracking-widest uppercase">
+                <h2 className="text-[#D97757] text-xs font-bold tracking-widest uppercase">
                   Amenities
                 </h2>
               </div>
@@ -256,15 +275,9 @@ const NewRoom = () => {
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
-                className="flex-1 bg-[#f0b429] text-black font-bold py-3 rounded-xl text-sm cursor-pointer"
+                className="px-6 py-3 rounded-lg bg-[#D97757] hover:bg-[#c4674a] text-white text-sm font-semibold tracking-wide transition-colors duration-200 cursor-pointer w-full"
               >
-                🚀 Submit Room
-              </button>
-              <button
-                type="button"
-                className="px-6 py-3 border border-[#2e2e2e] text-[#aaaaaa] rounded-xl text-sm cursor-pointer"
-              >
-                Cancel
+                Submit Room
               </button>
             </div>
           </form>

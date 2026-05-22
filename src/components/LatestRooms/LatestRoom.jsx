@@ -13,7 +13,7 @@ const LatestRoom = ({ room }) => {
             width={300}
             height={300}
             priority
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-120"
           ></Image>
         </figure>
         <div className="card-body">

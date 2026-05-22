@@ -5,7 +5,7 @@ const SeconderyButton = ({ name, link }) => {
   return (
     <Link
       href={link}
-      className="border border-[#D97757] rounded-box text-[16px] py-2.5 px-5"
+      className="px-6 py-3 rounded-lg border border-black/20 dark:border-white/20 text-[#1a1a1a] dark:text-white text-sm font-semibold tracking-wide hover:border-[#D97757]/60 hover:text-[#D97757] dark:hover:border-[#D97757]/60 dark:hover:text-[#D97757] transition-all duration-200"
     >
       {name}
     </Link>

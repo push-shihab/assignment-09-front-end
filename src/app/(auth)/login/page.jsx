@@ -7,8 +7,14 @@ import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const handleGoogleAuth = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
   const {
     register,
     handleSubmit,
@@ -23,11 +29,11 @@ const Login = () => {
       callbackURL: "/",
     });
     if (res) {
-      alert(`${res.user.name} your have been logged in successfully`);
+      toast.success(`${res.user.name} your have been logged in successfully`);
       redirect("/");
     }
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   return (
@@ -64,13 +70,13 @@ const Login = () => {
             <p className="title">Login</p>
             <p className="message">Enter your credentials to continue</p>
             <div className="flex justify-center py-3">
-              <Link
-                href={"/"}
-                className="border border-[#D97757] rounded-box text-[16px] py-2.5 px-5 flex gap-2 items-center justify-center"
+              <button
+                onClick={handleGoogleAuth}
+                className="border cursor-pointer border-[#D97757] rounded-box text-[16px] py-2.5 px-5 flex gap-2 items-center justify-center"
               >
                 <FaGoogle className="text-[#D97757]" />
                 Continue with Google
-              </Link>
+              </button>
             </div>
             <div className="flex items-center gap-3 my-6">
               <div className="h-px flex-1 bg-[#D97757]"></div>

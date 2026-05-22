@@ -1,4 +1,10 @@
+import Link from "next/link";
 import React from "react";
+import {
+  RiFacebookFill,
+  RiInstagramFill,
+  RiLinkedinFill,
+} from "react-icons/ri";
 
 const Footer = () => {
   return (
@@ -16,14 +22,14 @@ const Footer = () => {
               <br /> instant confirmation.
             </p>
             <div className="flex gap-2">
-              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#38bdf8]">
-                {/* <RiFacebookFill /> */}
+              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#D97757]">
+                <RiFacebookFill />
               </a>
-              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#38bdf8]">
-                {/* <RiInstagramFill /> */}
+              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#D97757]">
+                <RiInstagramFill />
               </a>
-              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#38bdf8]">
-                {/* <RiLinkedinFill /> */}
+              <a className="p-1.5 rounded-box bg-base-100 cursor-pointer hover:bg-[#D97757]">
+                <RiLinkedinFill />
               </a>
             </div>
           </div>
@@ -31,13 +37,28 @@ const Footer = () => {
             <span className="text-xl font-bold text-white">Quick Links</span>
             <ul className="text-[#858585] space-y-1.5 pt-3 font-semibold">
               <li>
-                <a className="cursor-pointer hover:text-[#5227FF]">Home</a>
+                <Link
+                  href={"/"}
+                  className="cursor-pointer hover:text-[#5227FF]"
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <a className="cursor-pointer hover:text-[#5227FF]">All Rooms</a>
+                <Link
+                  href={"/rooms"}
+                  className="cursor-pointer hover:text-[#5227FF]"
+                >
+                  All Rooms
+                </Link>
               </li>
               <li>
-                <a className="cursor-pointer hover:text-[#5227FF]">About Us</a>
+                <Link
+                  href={"/register"}
+                  className="cursor-pointer hover:text-[#5227FF]"
+                >
+                  Register
+                </Link>
               </li>
             </ul>
           </div>

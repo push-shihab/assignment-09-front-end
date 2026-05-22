@@ -5,7 +5,7 @@ export const StyledWrapper = styled.div`
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 550px;
+    max-width: 600px;
   }
 
   .input {
@@ -20,7 +20,7 @@ export const StyledWrapper = styled.div`
     background-color: #d9e8d8;
     color: #0d0c22;
     box-shadow:
-      0 0 5px #c1d9bf,
+      0 0 5px #d97757,
       0 0 0 10px #f5f5f5eb;
     transition: 0.3s ease;
   }

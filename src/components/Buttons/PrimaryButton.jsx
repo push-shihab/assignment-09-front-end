@@ -4,7 +4,7 @@ const PrimaryButton = ({ name, link }) => {
   return (
     <Link
       href={link}
-      className="bg-[#D97757] rounded-box text-[16px] py-2.5 px-5 text-white"
+      className="px-6 py-3 rounded-lg cursor-pointer bg-[#D97757] hover:bg-[#c4674a] text-white text-sm font-semibold tracking-wide transition-colors duration-200"
     >
       {name}
     </Link>

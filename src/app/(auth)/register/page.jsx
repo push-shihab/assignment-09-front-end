@@ -7,6 +7,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const {
@@ -24,8 +25,11 @@ const Register = () => {
       callbackURL: "/",
     });
     if (res) {
-      alert(`${res.user.name} your account created successfully`);
-      redirect("/login");
+      toast.success(`${res.user.name} your account created successfully`);
+      redirect("/");
+    }
+    if (error) {
+      toast.error(error.message);
     }
   };
   return (

@@ -1,3 +1,6 @@
+import PrimaryButton from "../Buttons/PrimaryButton";
+import SeconderyButton from "../Buttons/SeconderyButton";
+
 const ReadySection = () => {
   return (
     <section className="w-full dark:bg-[#d9785725] px-4 sm:px-8 md:px-12 lg:px-20 py-10 sm:py-14 md:py-20">
@@ -17,12 +20,14 @@ const ReadySection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
-            <button className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#D97757] hover:bg-[#c4674a] text-white text-sm font-semibold tracking-wide transition-colors duration-200">
-              Get Started Free →
-            </button>
-            <button className="w-full sm:w-auto px-6 py-3 rounded-lg border border-black/20 dark:border-white/20 text-[#1a1a1a] dark:text-white text-sm font-semibold tracking-wide hover:border-[#D97757]/60 hover:text-[#D97757] dark:hover:border-[#D97757]/60 dark:hover:text-[#D97757] transition-all duration-200">
-              Browse Rooms
-            </button>
+            <PrimaryButton
+              name={"Get Started Free"}
+              link={"/register"}
+            ></PrimaryButton>
+            <SeconderyButton
+              name={"Explore Rooms"}
+              link={"/rooms"}
+            ></SeconderyButton>
           </div>
         </div>
       </div>

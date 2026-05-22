@@ -37,9 +37,9 @@ const Banner = () => {
           </p>
 
           <div className="mt-8 flex gap-4">
-            <PrimaryButton name={"Explore Rooms"} link={"#"} />
+            <PrimaryButton name={"Explore Rooms"} link={"/rooms"} />
 
-            <SeconderyButton name={"Start Experiencing"} link={"#"} />
+            <SeconderyButton name={"Start Experiencing"} link={"/register"} />
           </div>
         </div>
       </div>

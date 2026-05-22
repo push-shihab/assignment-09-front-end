@@ -2,6 +2,8 @@
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 dayjs.extend(customParseFormat);
 const bookingTimes = [
   "07:00 AM",
@@ -60,9 +62,8 @@ const BookingCard = ({ room, userId }) => {
       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${room._id}&date=${data.date}&startTime=${data.startTime}&endTime=${data.endTime}`,
     );
     const existingBookings = await fetchedData.json();
-    console.log(existingBookings);
     if (existingBookings.length > 0) {
-      alert("Book a different slot.");
+      toast.error("Book a different slot.");
       return;
     }
     const bookingData = {
@@ -93,18 +94,19 @@ const BookingCard = ({ room, userId }) => {
       );
 
       const result = await response.json();
-      console.log(result);
+      if (result.acknowledged) {
+        toast.success("Booking has been confirmed😍");
+        redirect("/rooms/bookings");
+      }
     } catch (error) {
-      console.log(error);
-
-      alert("Something went wrong");
+      toast.error(error.message);
     }
   };
 
   return (
     <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 flex flex-col gap-4 sticky top-6">
       <div>
-        <p className="text-2xl font-bold text-yellow-400">
+        <p className="text-2xl font-bold text-[#D97757]">
           ${room.rate}
           <span className="text-sm text-gray-400 font-normal"> / hour</span>
         </p>
@@ -123,7 +125,7 @@ const BookingCard = ({ room, userId }) => {
 
           <input
             type="date"
-            className="input input-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500"
+            className="input input-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-[#D97757]"
             {...register("date", {
               required: "Date is required",
             })}
@@ -139,7 +141,7 @@ const BookingCard = ({ room, userId }) => {
           </label>
 
           <select
-            className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500"
+            className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-[#D97757]"
             {...register("startTime", {
               required: "Start time is required",
               onChange: () => {
@@ -166,7 +168,7 @@ const BookingCard = ({ room, userId }) => {
           </label>
 
           <select
-            className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-yellow-500"
+            className="select select-sm bg-[#111] border border-[#333] text-white rounded-lg w-full focus:outline-none focus:border-[#D97757]"
             {...register("endTime", {
               required: "End time is required",
             })}
@@ -192,7 +194,7 @@ const BookingCard = ({ room, userId }) => {
           <textarea
             rows={3}
             placeholder="Any special requests..."
-            className="textarea textarea-sm bg-[#111] border border-[#333] text-white placeholder-gray-600 rounded-lg w-full resize-none focus:outline-none focus:border-yellow-500"
+            className="textarea textarea-sm bg-[#111] border border-[#333] text-white placeholder-gray-600 rounded-lg w-full resize-none focus:outline-none focus:border-[#D97757]"
             {...register("specialNote")}
           />
         </div>
@@ -205,14 +207,14 @@ const BookingCard = ({ room, userId }) => {
             <p className="text-xs text-gray-500">Total Cost</p>
           </div>
 
-          <p className="text-xl font-bold text-yellow-400">${totalBill}</p>
+          <p className="text-xl font-bold text-[#D97757]">${totalBill}</p>
         </div>
 
         <button
           type="submit"
-          className="btn w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded-lg border-none normal-case text-sm"
+          className="px-6 py-3 rounded-lg bg-[#D97757] cursor-pointer hover:bg-[#c4674a] text-white text-sm font-semibold tracking-wide transition-colors duration-200"
         >
-          Confirm Booking →
+          Confirm Booking
         </button>
       </form>
     </div>
