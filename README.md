@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Study Nook
 
-## Getting Started
+## 📌 Project Name
 
-First, run the development server:
+**Study Nook**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📖 Description
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Study Nook is a very usefull and efficient app which can be very helpfull for students, teachers and people in general. Users can create their account here for free then they can create their own room space and rent it for people who are looking for a get together or doing an important meeting or maybe discussing on politics of their country. Every user can track their room data, their bookings and their bills.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- React JS
+- Next JS
+- Tailwind CSS
+- DaisyUI
+- Motion
+- Better Auth
+- MongoDB
+- Express JS
+- Many More
 
-## Learn More
+## ✨ Features
 
-To learn more about Next.js, take a look at the following resources:
+1. Users can register and login.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Protected routes only for valid users
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Login with Google
 
-## Deploy on Vercel
+4. Create rooms to rent it
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Book rooms as their preferences
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+6. Users can edit and delete their room
+
+7. Only the owner have options to delete and edit a room created by him
+
+8. User can cancel a booking of a room
+
+9. User can determine how many people, how much price and which floor will the space be hosted
+
+10. User's data is encrypted securely in the MongoDB Database.
+
+---
