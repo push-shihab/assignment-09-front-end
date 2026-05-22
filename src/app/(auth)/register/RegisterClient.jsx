@@ -6,10 +6,11 @@ import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const RegisterClient = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -26,7 +27,7 @@ const RegisterClient = () => {
     });
     if (res) {
       toast.success(`${res.user.name} your account created successfully`);
-      redirect("/");
+      router.push("/");
     }
     if (error) {
       toast.error(error.message);
