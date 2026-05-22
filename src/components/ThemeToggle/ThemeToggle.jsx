@@ -13,7 +13,8 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className="cursor-pointer p-2.5 rounded-full border hover:rounded-box hover:bg-[#1A1A1A] text-[#1A1A1A] hover:text-[#D97757]"
+      className="cursor-pointer p-2.5
+       rounded-full border hover:rounded-box hover:bg-[#1A1A1A] text-[#1A1A1A] hover:text-[#D97757]"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
