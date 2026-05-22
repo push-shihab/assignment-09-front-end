@@ -52,7 +52,7 @@ const LatestRoom = ({ room }) => {
             <div className="card-actions flex justify-between items-center">
               <p>
                 <span className="text-[#D97757] text-3xl font-bold">
-                  $ {room.rate}
+                  ${room.hourlyRate}
                 </span>
                 <span className="text-[#858585]"> / hr</span>
               </p>
