@@ -47,7 +47,7 @@ const RoomDetails = async ({ params }) => {
               <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-gray-300">
                 <span>📍 Floor: {data.floor}</span>
                 <span>👥 ${data.capacity} people</span>
-                <span>
+                <span className="flex items-center gap-1">
                   <span className="flex items-center gap-1">
                     <IoIosCreate color="#D97757" /> Created by{" "}
                   </span>

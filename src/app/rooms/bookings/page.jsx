@@ -176,7 +176,10 @@ const AllBookings = async () => {
                           </span>
                         </td>
                         <td className="py-4 px-4">
-                          <CancelBooking booking={booking}></CancelBooking>
+                          <CancelBooking
+                            startTime={booking.startTime}
+                            booking={booking}
+                          ></CancelBooking>
                         </td>
                       </tr>
                     ))}
