@@ -3,6 +3,9 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import CancelBooking from "./CancelBooking";
 import Link from "next/link";
+export const metadata = {
+  title: "Study-Nook | Your Bookings",
+};
 
 const AllBookings = async () => {
   const { session } = await auth.api.getSession({

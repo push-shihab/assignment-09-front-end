@@ -1,5 +1,9 @@
 import RoomsClient from "./RoomsClient";
 
+export const metadata = {
+  title: "Study-Nook | All Rooms",
+};
+
 const Rooms = async () => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_FETCHURL}/rooms`);
   const allRooms = await data.json();

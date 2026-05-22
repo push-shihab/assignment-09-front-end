@@ -4,6 +4,13 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import EditRoom from "./EditRoom";
 import DeleteRoom from "./DeleteRoom";
+import { IoIosCreate } from "react-icons/io";
+
+export async function generateMetadata() {
+  return {
+    title: "Study-Nook | Room Details",
+  };
+}
 
 const RoomDetails = async ({ params }) => {
   const { session } = await auth.api.getSession({
@@ -41,7 +48,9 @@ const RoomDetails = async ({ params }) => {
                 <span>📍 Floor: {data.floor}</span>
                 <span>👥 ${data.capacity} people</span>
                 <span>
-                  🔵 Created by{" "}
+                  <span className="flex items-center gap-1">
+                    <IoIosCreate color="#D97757" /> Created by{" "}
+                  </span>
                   <span className="text-blue-400 font-medium">
                     {data.userName}
                   </span>

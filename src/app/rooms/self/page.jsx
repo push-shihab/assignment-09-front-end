@@ -3,6 +3,9 @@ import LatestRoom from "@/components/LatestRooms/LatestRoom";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import React from "react";
+export const metadata = {
+  title: "Study-Nook | Your Rooms",
+};
 
 const MyRooms = async () => {
   const { token } = await auth.api.getToken({

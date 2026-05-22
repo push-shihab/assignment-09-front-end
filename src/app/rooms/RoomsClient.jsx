@@ -3,6 +3,12 @@ import { useState } from "react";
 import { StyledWrapper } from "./style";
 import LatestRoom from "@/components/LatestRooms/LatestRoom";
 
+export const metadata = {
+  title: {
+    absolute: "Study-Nook | All Rooms",
+  },
+};
+
 const amenities = [
   "All Rooms",
   "Whiteboard",
