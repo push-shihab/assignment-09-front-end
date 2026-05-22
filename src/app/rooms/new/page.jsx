@@ -71,7 +71,7 @@ const NewRoom = () => {
         <div className="min-h-screen flex flex-col items-center py-10 px-4">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className=" w-full bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 space-y-8 shadow-2xl"
+            className=" w-full bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 space-y-8 shadow-[0_0_25px_2px_#d97757]"
           >
             <div>
               <div className="flex items-center gap-2 mb-5 border-b border-[#2e2e2e] pb-3">

@@ -17,7 +17,7 @@ const NavBar = async () => {
   };
 
   return (
-    <nav className="bg-[#5227FF]">
+    <nav className="bg-[#5227FF] sticky top-0 z-50">
       <div className="navbar container mx-auto text-white">
         <div className="navbar-start">
           <div className="dropdown">

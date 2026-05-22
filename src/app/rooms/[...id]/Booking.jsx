@@ -1,30 +1,29 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
-dayjs.extend(customParseFormat);
+
 const bookingTimes = [
-  "07:00 AM",
-  "08:00 AM",
-  "09:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "01:00 PM",
-  "02:00 PM",
-  "03:00 PM",
-  "04:00 PM",
-  "05:00 PM",
-  "06:00 PM",
-  "07:00 PM",
-  "08:00 PM",
-  "09:00 PM",
-  "10:00 PM",
+  "07:00",
+  "08:00",
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
 ];
 
 const BookingCard = ({ room, userId }) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -38,17 +37,11 @@ const BookingCard = ({ room, userId }) => {
 
   const availableEndTimes = bookingTimes.filter((time) => {
     if (!startTime) return true;
-
-    const start = dayjs(startTime, "hh:mm A");
-    const current = dayjs(time, "hh:mm A");
-
-    return current.isAfter(start);
+    return time > startTime;
   });
 
   const totalHours =
-    startTime && endTime
-      ? dayjs(endTime, "hh:mm A").diff(dayjs(startTime, "hh:mm A"), "hour")
-      : 0;
+    startTime && endTime ? parseInt(endTime) - parseInt(startTime) : 0;
 
   const totalBill = totalHours * room.rate;
 
@@ -61,11 +54,12 @@ const BookingCard = ({ room, userId }) => {
     const fetchedData = await fetch(
       `${process.env.NEXT_PUBLIC_FETCHURL}/rooms/bookings?roomId=${room._id}&date=${data.date}&startTime=${data.startTime}&endTime=${data.endTime}`,
     );
-    const existingBookings = await fetchedData.json();
-    if (existingBookings.length > 0) {
+    const hasConflict = await fetchedData.json();
+    if (hasConflict.length > 0) {
       toast.error("Book a different slot.");
       return;
     }
+
     const bookingData = {
       roomId: room._id,
       roomName: room.name,
@@ -96,7 +90,7 @@ const BookingCard = ({ room, userId }) => {
       const result = await response.json();
       if (result.acknowledged) {
         toast.success("Booking has been confirmed😍");
-        redirect("/rooms/bookings");
+        router.push("/rooms/bookings");
       }
     } catch (error) {
       toast.error(error.message);
@@ -104,7 +98,7 @@ const BookingCard = ({ room, userId }) => {
   };
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 flex flex-col gap-4 sticky top-6">
+    <div className="bg-[#1a1a1a] border border-[#d97757]/50 rounded-xl p-5 flex flex-col gap-4 sticky top-6 shadow-[0_0_10px_0_#d97757]/30">
       <div>
         <p className="text-2xl font-bold text-[#D97757]">
           ${room.rate}

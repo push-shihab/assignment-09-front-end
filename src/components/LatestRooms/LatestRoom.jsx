@@ -5,7 +5,7 @@ import PrimaryButton from "../Buttons/PrimaryButton";
 const LatestRoom = ({ room }) => {
   return (
     <div className="py-7">
-      <div className="card bg-base-100 shadow-sm rounded-3xl">
+      <div className="card bg-base-100 border border-[#D97757]/10 rounded-3xl hover:border-[#D97757]/50 shadow-sm hover:shadow-[1px_1px_20px_#D97757] group hover:scale-103 transition-all duration-300 ease-in">
         <figure className="w-full h-75 overflow-hidden">
           <Image
             src={room.image}

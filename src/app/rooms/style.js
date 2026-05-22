@@ -17,12 +17,10 @@ export const StyledWrapper = styled.div`
     border: 2px solid transparent;
     border-radius: 8px;
     outline: none;
-    background-color: #d9e8d8;
-    color: #0d0c22;
-    box-shadow:
-      0 0 5px #d97757,
-      0 0 0 10px #f5f5f5eb;
-    transition: 0.3s ease;
+    background-color: #1a1a1a;
+    color: #858585;
+    box-shadow: 0 0 5px 2px #d97757;
+    transition: 0.7s ease;
   }
 
   .input::placeholder {

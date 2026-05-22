@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 const Profile = ({ session, revalidatePathForLogout }) => {
   const handleLogout = async () => {
@@ -13,23 +13,14 @@ const Profile = ({ session, revalidatePathForLogout }) => {
     redirect("/login");
   };
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const handleOpen = () => {
+    setOpen(!open);
+  };
 
   return (
-    <div ref={ref} className="relative inline-block">
+    <div className="relative inline-block">
       <button
-        onMouseDown={(e) => e.stopPropagation()}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={handleOpen}
         className="flex items-center gap-2 md:gap-3 px-2 py-2 md:px-4 rounded-full bg-[#1a1a1a] border border-white/10 hover:border-[#D97757]/50 transition-all duration-300 shadow-lg group"
       >
         <div className="w-8 h-8 rounded-full overflow-hidden shadow-md shadow-[#D97757]/30 shrink-0 relative">
@@ -74,7 +65,7 @@ const Profile = ({ session, revalidatePathForLogout }) => {
 
         <div className="py-2">
           <Link href={"/rooms/self"} className="cursor-pointer">
-            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
+            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group cursor-pointer">
               <span className="text-lg">📋</span>
               <span className="text-sm font-medium tracking-wide">
                 My Rooms
@@ -83,7 +74,7 @@ const Profile = ({ session, revalidatePathForLogout }) => {
             </button>
           </Link>
           <Link href={"/rooms/bookings"} className="cursor-pointer">
-            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group">
+            <button className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200 group cursor-pointer">
               <span className="text-lg">📅</span>
               <span className="text-sm font-medium tracking-wide">
                 My Bookings
@@ -98,7 +89,7 @@ const Profile = ({ session, revalidatePathForLogout }) => {
             className="w-full flex items-center gap-3 px-5 py-3 md:py-3.5 text-[#5227FF] hover:text-white hover:bg-[#5227FF]/20 transition-all duration-200 group cursor-pointer"
             onClick={handleLogout}
           >
-            <span className="text-lg">🚪</span>
+            <span className="text-lg">💣</span>
             <span className="text-sm font-semibold tracking-wide">Logout</span>
           </button>
         </div>
