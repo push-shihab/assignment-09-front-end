@@ -1,10 +1,10 @@
 import Link from "next/link";
-import SeconderyButton from "../Buttons/SeconderyButton";
 import LatestRoom from "./LatestRoom";
 
 const LatestRooms = async () => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_FETCHURL}/rooms/latest`);
   const latestRoomsData = await data.json();
+  const latestRooms = latestRoomsData.reverse();
 
   return (
     <main className="bg-[#d9785725] px-4 sm:px-6 md:px-10">
@@ -18,7 +18,7 @@ const LatestRooms = async () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-          {latestRoomsData.map((room) => (
+          {latestRooms.map((room) => (
             <LatestRoom key={room._id} room={room} />
           ))}
         </div>

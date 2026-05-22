@@ -38,7 +38,7 @@ const CancelBooking = ({ booking }) => {
           >
             <div className="modal-box bg-black">
               <h3 className="font-bold text-lg">
-                Are you sure of deleting{" "}
+                Are you sure of canceling{" "}
                 <span className="font-bold text-red-600">
                   {booking.roomName}
                 </span>
@@ -47,14 +47,14 @@ const CancelBooking = ({ booking }) => {
               <p className="py-4">
                 This can not be <span className=" text-red-600">undone!</span>
               </p>
-              <p className="py-4">If yes then click on Delete</p>
+              <p className="py-4">If yes then click on Cancel</p>
               <div className="modal-action">
                 <form method="dialog" className="flex gap-3">
                   <button
                     className="px-6 py-3 rounded-lg cursor-pointer bg-red-700 hover:bg-red-500/80 text-white text-sm font-semibold tracking-wide transition-colors duration-200"
                     onClick={handleCancel}
                   >
-                    Delete
+                    Cancel
                   </button>
                   <button className="px-6 py-3 rounded-lg cursor-pointer border border-red-300  text-white text-sm font-semibold tracking-wide transition-colors duration-200">
                     Close

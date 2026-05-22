@@ -19,26 +19,25 @@ const Banner = () => {
         />
       </div>
 
-      <div className="absolute inset-0 z-40 flex items-center justify-center">
-        <div className="container mx-auto flex flex-col items-center text-center text-white">
-          <div className="border-l-3 border-[#D97757] pl-3 ">
+      <div className="absolute inset-0 z-40 flex items-center justify-center bg-black/30">
+        <div className="container mx-auto flex flex-col items-center px-4 text-center text-white sm:px-6 lg:px-8">
+          <div className="border-l-[3px] border-[#D97757] pl-3 text-sm sm:text-base">
             Now with instant booking
           </div>
 
-          <h1 className="mt-4 text-6xl font-bold leading-tight">
+          <h1 className="mt-4 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Find Your <span className="text-[#D97757]">Perfect</span>
             <br />
             Study Room
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg text-gray-300">
+          <p className="mt-6 max-w-xl px-2 text-base text-gray-300 sm:max-w-2xl sm:text-lg">
             Browse and book quiet, private study rooms in your library. List
             your own room and earn from it.
           </p>
 
-          <div className="mt-8 flex gap-4">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <PrimaryButton name={"Explore Rooms"} link={"/rooms"} />
-
             <SeconderyButton name={"Start Experiencing"} link={"/register"} />
           </div>
         </div>

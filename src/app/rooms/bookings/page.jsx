@@ -88,7 +88,10 @@ const AllBookings = async () => {
                     Total Spent
                   </p>
                   <p className="text-3xl font-extrabold tracking-tight text-[#5227FF]">
-                    $ {res.reduce((acc, booking) => acc + booking.totalBill, 0)}
+                    ${" "}
+                    {res
+                      .filter((booking) => booking.status == "Confirmed")
+                      .reduce((acc, booking) => acc + booking.totalBill, 0)}
                   </p>
                 </div>
               </div>

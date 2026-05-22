@@ -6,6 +6,7 @@ import NavLinks from "./NavLinks";
 import Profile from "./Profile";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const NavBar = async () => {
   const session = await auth.api.getSession({
@@ -55,11 +56,11 @@ const NavBar = async () => {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="flex gap-4 justify-center items-center text-[16px]">
+          <ul className="flex gap-4 justify-center items-center text-[16px] bg-[#1A1A1A] px-2 py-1.5 rounded-4xl border border-white/10 hover:border-[#D97757]/50 transition-all duration-300 shadow-lg group">
             <NavLinks session={session}></NavLinks>
           </ul>
         </div>
-        <div className="navbar-end gap-2">
+        <div className="navbar-end gap-2.5">
           {session ? (
             <Profile
               revalidatePathForLogout={revalidatePathForLogout}
@@ -74,6 +75,7 @@ const NavBar = async () => {
               ></PrimaryButton>
             </>
           )}
+          <ThemeToggle></ThemeToggle>
         </div>
       </div>
     </nav>

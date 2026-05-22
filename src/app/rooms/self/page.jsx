@@ -50,7 +50,7 @@ const MyRooms = async () => {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 px-5">
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 p-5">
             {res.map((room) => (
               <LatestRoom key={room._id} room={room}></LatestRoom>
             ))}
